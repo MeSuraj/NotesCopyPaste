@@ -1,4 +1,99 @@
-# 🚀 SmartNotes Dynamic ### A lightweight, modular client-side web application for note management, quick sentence clipboard execution, and offline single-file HTML exporting.
-https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5" />  https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3" />  https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript" />  https://img.shields.io/badge/Sortable.js-101010?style=for-the-badge&logo=javascript&logoColor=white" alt="Sortable.js" />  https://img.shields.io/badge/GitHub%20Pages-222222?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Pages" />
+<div align="center">
 
---- ## 📌 Overview **SmartNotes Dynamic** is designed for high-efficiency note preparation, documentation management, and quality checking workflows (such as TC, MH, and FDMS inspection logs). It provides an intuitive, highly customizable interface that allows users to organize sentences into tabs, highlight key terms, drag-and-drop reorder elements, and instantly copy pre-formatted remarks to the clipboard. It features an intelligent single-file builder that bundles external JavaScript logic, CSS styling, and active state data into a self-contained `.html` file that operates 100% offline. --- ## ✨ Features * 📑 **Tab & Category Management** Organize remarks across predefined tabs (TC, MH, FDMS) or create, rename, and delete custom tabs dynamically. * ✏️ **Inline Sentence & Highlight Editor** Add, edit, and delete sentences in real time. Customize keyword highlight colors per sentence. * 🔀 **Drag-and-Drop Reordering** Powered by `Sortable.js` to effortlessly reorder both tabs and sentence lists. * 🎨 **Live UI Customization** Fine-tune font family, font size, container width, line height, padding, theme accent colors, and toggle Dark Mode on the fly. * 📋 **Automated Clipboard Copying** Select single or multiple lines to instantly copy formatted remarks directly to your clipboard with a visual floating preview. * 💾 **Self-Contained Single-File HTML Exporter** Converts modular external assets (`styles.css`, `app.js`, and JSON state) into an inline, self-contained `SmartNotes_Dynamic.html` export that functions completely offline without external folder dependencies. * 🔄 **State Persistence & Priority Fallback** Saves state to `localStorage` with dual-priority reading to ensure exported standalone files seamlessly restore custom notes and settings. --- ## 🛠️ Tech Stack | Technology | Purpose | | :--- | :--- | | **HTML5** | Application markup and DOM structure | | **CSS3** | Layout styling, custom CSS variables, dark theme, and control panels | | **JavaScript (ES6+)** | State management, DOM manipulation, clipboard API, and inline asset bundler | | **SortableJS** | Drag-and-drop reordering library for elements and tabs | | **GitHub Pages** | Static website deployment and hosting | --- ## 📊 Architecture Diagram ```mermaid flowchart TD A[User Action] -->|Select/Edit Notes| B[DOM Elements] B -->|Event Listeners| C[app.js Controller] C -->|Save State| D[(localStorage)] C -->|Inject Data| E[DOM Node Updates] subgraph Single-File Bundler C -->|Trigger Export| F[Fetch styles.css & app.js] F -->|Embed CSS, JS & JSON Data| G[Inline Clone Generator] G -->|Generate Download| H[SmartNotes_Dynamic.html] end ``` --- ## 📁 Project Structure ```text smartnotes/ ├── index.html # Entry point containing app layout, controls, and script injection tag ├── app.js # State logic, DOM rendering, clipboard management, and single-file bundling ├── styles/ │ └── styles.css # Core styles, CSS variables, dark mode rules, and responsive layouts └── README.md # Project documentation ``` ### File Responsibilities * `index.html`: Holds the primary markup, control panel inputs, tab navigation layout, and an `#app-data` script block for data initialization. * `app.js`: Contains state initialization, sentence parsing, event handling, drag-and-drop configuration, `localStorage` synchronization, and the offline HTML exporter. * `styles/styles.css`: Defines layout rules, control panel styling, theme variables (`--theme-color`, `--global-font-size`, etc.), and Dark Mode color overrides. --- ## ⚙️ Installation & Local Setup Since **SmartNotes Dynamic** is a client-side static web application, no server installation, `npm install`, or build steps are required. ### Steps 1. **Clone the repository** ```bash git clone https://github.com/your-username/smartnotes.git cd smartnotes ``` 2. **Run locally** * **Option 1**: Double-click `index.html` to open it directly in any modern web browser. * **Option 2**: Serve via a local web server (e.g., VS Code Live Server extension or Python static server): ```bash python -m http.server 8000 ``` Then open `http://localhost:8000` in your browser. --- ## 🚀 Usage 1. **Selecting & Copying Notes** * Click on any sentence item in the active tab to select it. * Selected items will automatically combine and copy to your system clipboard. * Click **CLEAR** or deselect lines to clear the selection. 2. **Managing Tabs & Sentences** * Click the **EDIT** button to enter management mode. * Add new tabs or click **+ Add Sentence** under any tab to create custom notes. * Click **✎ Edit** to change sentence text or keyword highlight color. * Drag the `☰` handle to reorder sentences or tabs. * Click **DONE** to finalize changes. 3. **Customizing Display Settings** * Use the top toolbar controls to adjust Font Size, Font Family, Line Height, Padding, and Accent Color. * Click the Dark Mode toggle icon to switch between light and dark themes. 4. **Exporting Standalone File** * Click **SAVE**. * The application generates a bundled `SmartNotes_Dynamic.html` file containing your current configurations and data embedded directly inside it. --- ## 🔐 Environment Variables No environment variables are used or required by this project. --- ## 🔌 API Documentation This project operates completely client-side and does not consume or expose external REST APIs. --- ## 🧩 Configuration Application settings are controlled dynamically via the UI toolbar and stored within `appState`: ```javascript { version: 3, activeTabId: 'tc', settings: { theme: 'light', themeColor: '#1a73e8', fontSize: '11px', fontFamily: "'Segoe UI', sans-serif", height: '45px', width: '100%', padding: '12px' }, tabs: [...] } ``` --- ## 🧪 Testing No automated testing suite is configured for this repository. --- ## 🏗️ Build No compilation or build step is required. Assets are bundled at runtime on demand via the browser using JavaScript `Blob` and `fetch` APIs. --- ## ☁️ Deployment ### GitHub Pages This project is optimized for deployment on **GitHub Pages**. 1. Push your repository code to GitHub. 2. Go to **Settings** > **Pages** in your GitHub repository. 3. Under **Build and deployment** > **Source**, select `Deploy from a branch`. 4. Select the `main` (or `master`) branch and directory `/ (root)`. 5. Click **Save**. The live URL will be generated automatically. --- ## 🤝 Contributing 1. Fork the repository. 2. Create a feature branch (`git checkout -b feature/NewFeature`). 3. Commit your changes (`git commit -m 'Add NewFeature'`). 4. Push to the branch (`git push origin feature/NewFeature`). 5. Open a Pull Request. --- ## 📄 License No explicit license file detected in the repository. --- ## ⭐ Support If you find this tool helpful, feel free to give this repository a ⭐ on GitHub!
+  <h1>📝 NotesCopyPaste</h1>
+  <p><b>Fast, Dynamic & Efficient One-Click Notes & Pre-written Text Copy Utility</b></p>
+
+  [![Live Demo](https://img.shields.io/badge/Live-Demo%20%F0%9F%9A%80-brightgreen?style=for-the-badge)](https://mesuraj.github.io/NotesCopyPaste/)
+  [![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-blue?style=for-the-badge&logo=github)](https://github.com/MeSuraj/NotesCopyPaste)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+
+  <br />
+
+  <a href="https://mesuraj.github.io/NotesCopyPaste/">🌐 **Try Live App**</a> • 
+  <a href="#-features">✨ **Features**</a> • 
+  <a href="#-how-to-use">📖 **How to Use**</a> • 
+  <a href="#-customization">🎨 **Customization**</a>
+
+</div>
+
+---
+
+## 📌 Overview
+
+**NotesCopyPaste** is a lightweight, responsive web application designed for audit teams, field engineers, telecom quality analysts, and daily multi-text copy tasks. It allows users to quickly access predefined technical comments, select multiple lines, auto-copy text to the clipboard, and manage tabs effortlessly.
+
+Built using **vanilla JavaScript, HTML5, CSS3, and SortableJS**, it requires no complex backend installations and works directly inside any web browser on both Desktop and Mobile!
+
+---
+
+## ✨ Features
+
+* ⚡ **One-Click Multi-Selection & Auto-Copy**: Click any line to select and immediately copy it to the clipboard. Multi-line selections format automatically with line breaks.
+* 🗂️ **Dynamic Tab & Sentence Manager**: Easily add, edit, rename, reorder, or delete custom categories/tabs (e.g., `TC`, `MH`, `FDMS`) and individual notes directly from the UI.
+* 🔀 **Drag & Drop Reordering**: Seamlessly reorder both tabs and note items with intuitive drag handles (powered by SortableJS).
+* 🌗 **Dark / Light Mode**: Toggle between crisp Light Mode and eye-friendly Dark Mode.
+* 🎨 **Complete UI Personalization**:
+  * Accent Color Picker
+  * Custom Font Size & Font Family Selector
+  * Adjustable Card Height, Width, and Padding Sliders
+* 💾 **Persistent Storage & Standalone Export**: Automatically saves configurations in local storage. Click **SAVE** to download a standalone dynamic single-file HTML executable with all your customized data!
+
+---
+
+## 🚀 Live Demo
+
+Access the hosted application anytime on GitHub Pages:
+👉 **[https://mesuraj.github.io/NotesCopyPaste/](https://mesuraj.github.io/NotesCopyPaste/)**
+
+---
+
+## 📖 How to Use
+
+1. **Select Notes**: Simply click on any note card to add it to the clipboard tray.
+2. **Copy Text**: Click **Copy** in the bottom clipboard box (or rely on auto-copy).
+3. **Edit / Manage Content**:
+   * Click the **`⚙` / `EDIT`** button in the header bar.
+   * Add new tabs or create new custom notes.
+   * Drag items using `☰` to rearrange their order.
+   * Change colors, fonts, or element sizes according to your comfort.
+   * Click **`DONE`** to exit edit mode.
+4. **Save & Export**: Click **`SAVE`** to update local memory and download an offline version containing all your saved tabs and edits!
+
+---
+
+## 🛠️ Tech Stack
+
+* **Frontend**: HTML5, CSS3 (CSS Variables)
+* **Logic**: Vanilla JavaScript (ES6+)
+* **Drag-and-Drop**: [SortableJS](https://sortablejs.github.io/Sortable/)
+* **Hosting**: GitHub Pages
+
+---
+
+## 📥 Local Installation
+
+No build steps or dependencies required!
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/MeSuraj/NotesCopyPaste.git
+
+# 2. Navigate to the project folder
+cd NotesCopyPaste
+
+# 3. Open index.html in your browser
+```
+
+---
+
+## 👤 Author
+
+* **Suraj**
+* **GitHub**: [@MeSuraj](https://github.com/MeSuraj)
+* **Live Project**: [NotesCopyPaste](https://mesuraj.github.io/NotesCopyPaste/)
+
+---
+
+<div align="center">
+  <sub>Built with ❤️ for fast and efficient daily documentation.</sub>
+</div>
