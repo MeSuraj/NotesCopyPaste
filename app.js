@@ -437,28 +437,72 @@ document.getElementById('resetBtn').addEventListener('click', () => {
     }
 });
 
-document.getElementById('saveBtn').addEventListener('click', () => {
+document.getElementById('saveBtn').addEventListener('click', async () => {
     document.body.classList.remove('edit-mode');
     document.getElementById('editBtn').innerText = "EDIT";
     clearSelections();
     
+    // Inputs aur Selects ki current value ko HTML attributes mein sync karna
     const syncInputs = ['rangeHeight', 'rangeWidth', 'rangePadding', 'themeColorPicker'];
     syncInputs.forEach(id => { let el = document.getElementById(id); el.setAttribute('value', el.value); });
     const syncSelects = ['fontSize', 'fontFamily'];
     syncSelects.forEach(id => {
         let select = document.getElementById(id);
-        Array.from(select.options).forEach(opt => { if (opt.value === select.value) opt.setAttribute('selected', 'selected'); else opt.removeAttribute('selected'); });
+        Array.from(select.options).forEach(opt => { 
+            if (opt.value === select.value) opt.setAttribute('selected', 'selected'); 
+            else opt.removeAttribute('selected'); 
+        });
     });
     
     saveAppState();
     
-    let currentHTML = document.documentElement.outerHTML;
-    const blob = new Blob(["<!DOCTYPE html>\n" + currentHTML], { type: 'text/html' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'SmartNotes_Dynamic.html';
-    a.click();
+    try {
+        // Document ka ek copy (clone) create karna taaki live page disturb na ho
+        let htmlClone = document.documentElement.cloneNode(true);
+        
+        // CSS file ko fetch karke inline <style> tag mein convert karna
+        let linkNode = htmlClone.querySelector('link[href="styles/styles.css"]');
+        if (linkNode) {
+            let cssResponse = await fetch('styles/styles.css');
+            let cssText = await cssResponse.text();
+            let styleNode = document.createElement('style');
+            styleNode.textContent = cssText;
+            linkNode.replaceWith(styleNode);
+        }
+
+        // JS file ko fetch karke inline <script> tag mein convert karna
+        let extScriptNode = htmlClone.querySelector('script[src="app.js"]');
+        if (extScriptNode) {
+            let jsResponse = await fetch('app.js');
+            let jsText = await jsResponse.text();
+            let scriptNode = document.createElement('script');
+            scriptNode.textContent = jsText;
+            extScriptNode.replaceWith(scriptNode);
+        }
+
+        // Final standalone HTML generate karna
+        let finalHTML = "<!DOCTYPE html>\n" + htmlClone.outerHTML;
+        
+        // Blob banakar download trigger karna
+        const blob = new Blob([finalHTML], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'SmartNotes_Dynamic.html';
+        a.click();
+        URL.revokeObjectURL(url);
+        
+    } catch (error) {
+        console.error("Save error:", error);
+        // Agar fetch fail ho jaye (jaise agar offline chal raha ho), to fallback normal save
+        let currentHTML = document.documentElement.outerHTML;
+        const blob = new Blob(["<!DOCTYPE html>\n" + currentHTML], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'SmartNotes_Dynamic.html';
+        a.click();
+    }
 });
 
 loadAppState();
