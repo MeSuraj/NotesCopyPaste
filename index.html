@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Notes Manager</title>
+
+<!-- External CSS Reference -->
+<link rel="stylesheet" href="styles/styles.css">
+
+<!-- Saved Data Store (For Export) -->
+<script id="app-data" type="application/json"></script>
+<!-- Sortable JS CDN (Drag & Drop) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+</head>
+<body>
+
+<div class="header-container">
+    <div class="tabs-top">
+        <div class="tabs-left" id="tabsNav"></div>
+        <div class="action-btns">
+            <button id="editBtn">⚙</button>
+        </div>
+    </div>
+
+    <div class="controls-row">
+        <button class="theme-toggle" id="themeToggle"><div class="switch"></div></button>
+        <input type="color" id="themeColorPicker" value="#1a73e8" style="width:25px; height:25px; border:none; background:none; cursor:pointer;" title="Theme Color">
+        
+        <select id="fontSize" class="style-select" title="Font Size">
+            <option value="7px">Sz: 7</option><option value="8px">Sz: 8</option><option value="9px">Sz: 9</option><option value="10px">Sz: 10</option>
+            <option value="11px">Sz: 11</option><option value="12px">Sz: 12</option><option value="13px">Sz: 13</option><option value="14px">Sz: 14</option>
+            <option value="15px">Sz: 15</option><option value="16px">Sz: 16</option><option value="17px">Sz: 17</option>
+        </select>
+
+        <select id="fontFamily" class="style-select" title="Font Family">
+            <option value="'Segoe UI', sans-serif">Segoe UI</option><option value="'Roboto', sans-serif">Roboto</option><option value="cursive">Cursive</option>
+            <option value="monospace">Monospace</option><option value="'Georgia', serif">Georgia</option><option value="'Verdana', sans-serif">Verdana</option>
+            <option value="'Impact', sans-serif">Impact</option><option value="'Courier New', monospace">Courier</option><option value="'Trebuchet MS', sans-serif">Trebuchet</option>
+            <option value="'Comic Sans MS', cursive">Comic Sans</option>
+        </select>
+
+        <div class="control-group">H: <input type="range" id="rangeHeight" min="25" max="80" value="45"></div>
+        <div class="control-group">W: <input type="range" id="rangeWidth" min="50" max="100" value="100"></div>
+        <div class="control-group">P: <input type="range" id="rangePadding" min="5" max="30" value="12"></div>
+        
+        <button id="resetBtn" style="background: #ea4335; color: white; border: none; padding: 8px 12px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 10px; margin-left:auto;">RESET</button>
+        <button id="saveBtn" style="background: #34a853; color: white; border: none; padding: 8px 12px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 10px;">SAVE</button>
+    </div>
+</div>
+
+<div class="container" id="mainContainer"></div>
+<div class="container" id="managerContainer"></div>
+
+<div class="clipboard-box" id="clipboardBox">
+    <div id="clipboardText"></div>
+    <div class="buttons">
+        <button class="copy-btn" id="copyBtn">Copy</button>
+        <button class="clear-btn" id="clearBtn">Clear</button>
+    </div>
+</div>
+
+<!-- External JavaScript Reference -->
+<script src="app.js"></script>
+</body>
+</html>
