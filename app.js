@@ -99,6 +99,7 @@ Either laminate the labeling paper or replace it with glossy paper.,
 `
 };
 
+
 let appState = null;
 let selectedLines = [];
 let clearTimer = null;
@@ -134,16 +135,25 @@ function parseDefaultToSentences(text) {
 function loadAppState() {
     let loaded = false;
     try {
-        const saved = localStorage.getItem('smartNotesAppState');
-        if (saved) {
-            const parsed = JSON.parse(saved);
-            if (parsed && parsed.version && parsed.tabs && Array.isArray(parsed.tabs)) { appState = parsed; loaded = true; }
+        // 1. First priority: Check embedded data in the HTML file (#app-data)
+        const scriptData = document.getElementById('app-data');
+        if (scriptData && scriptData.textContent.trim()) {
+            const parsed = JSON.parse(scriptData.textContent.trim());
+            if (parsed && parsed.version && parsed.tabs && Array.isArray(parsed.tabs)) { 
+                appState = parsed; 
+                loaded = true; 
+            }
         }
+        
+        // 2. Second priority: Fallback to localStorage if no embedded data exists
         if (!loaded) {
-            const scriptData = document.getElementById('app-data');
-            if (scriptData && scriptData.textContent.trim()) {
-                const parsed = JSON.parse(scriptData.textContent.trim());
-                if (parsed && parsed.version && parsed.tabs && Array.isArray(parsed.tabs)) { appState = parsed; loaded = true; }
+            const saved = localStorage.getItem('smartNotesAppState');
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                if (parsed && parsed.version && parsed.tabs && Array.isArray(parsed.tabs)) { 
+                    appState = parsed; 
+                    loaded = true; 
+                }
             }
         }
     } catch(e) { console.warn("Parse Error:", e); }
@@ -158,7 +168,10 @@ function loadAppState() {
 function saveAppState() {
     try {
         localStorage.setItem('smartNotesAppState', JSON.stringify(appState));
-        document.getElementById('app-data').textContent = JSON.stringify(appState);
+        const scriptData = document.getElementById('app-data');
+        if (scriptData) {
+            scriptData.textContent = JSON.stringify(appState);
+        }
     } catch(e) { console.error("Save Error:", e); }
 }
 
@@ -217,7 +230,6 @@ function renderMainView() {
         }
         mainContainer.appendChild(col);
         
-        // Safety Check for Drag-Drop Offline scenario
         if (typeof Sortable !== 'undefined') {
             new Sortable(col, {
                 handle: '.drag-handle', animation: 150,
@@ -442,25 +454,36 @@ document.getElementById('saveBtn').addEventListener('click', async () => {
     document.getElementById('editBtn').innerText = "EDIT";
     clearSelections();
     
-    // Inputs aur Selects ki current value ko HTML attributes mein sync karna
+    // Sync current values to attributes
     const syncInputs = ['rangeHeight', 'rangeWidth', 'rangePadding', 'themeColorPicker'];
-    syncInputs.forEach(id => { let el = document.getElementById(id); el.setAttribute('value', el.value); });
+    syncInputs.forEach(id => { 
+        let el = document.getElementById(id); 
+        if(el) el.setAttribute('value', el.value); 
+    });
     const syncSelects = ['fontSize', 'fontFamily'];
     syncSelects.forEach(id => {
         let select = document.getElementById(id);
-        Array.from(select.options).forEach(opt => { 
-            if (opt.value === select.value) opt.setAttribute('selected', 'selected'); 
-            else opt.removeAttribute('selected'); 
-        });
+        if(select) {
+            Array.from(select.options).forEach(opt => { 
+                if (opt.value === select.value) opt.setAttribute('selected', 'selected'); 
+                else opt.removeAttribute('selected'); 
+            });
+        }
     });
     
+    // Save state to appState and update DOM
     saveAppState();
     
     try {
-        // Document ka ek copy (clone) create karna taaki live page disturb na ho
         let htmlClone = document.documentElement.cloneNode(true);
         
-        // CSS file ko fetch karke inline <style> tag mein convert karna
+        // Update embedded #app-data script tag with current JSON state
+        let appDataScript = htmlClone.querySelector('#app-data');
+        if (appDataScript) {
+            appDataScript.textContent = JSON.stringify(appState);
+        }
+
+        // Bundle styles.css inline
         let linkNode = htmlClone.querySelector('link[href="styles/styles.css"]');
         if (linkNode) {
             let cssResponse = await fetch('styles/styles.css');
@@ -470,7 +493,7 @@ document.getElementById('saveBtn').addEventListener('click', async () => {
             linkNode.replaceWith(styleNode);
         }
 
-        // JS file ko fetch karke inline <script> tag mein convert karna
+        // Bundle app.js inline
         let extScriptNode = htmlClone.querySelector('script[src="app.js"]');
         if (extScriptNode) {
             let jsResponse = await fetch('app.js');
@@ -480,10 +503,7 @@ document.getElementById('saveBtn').addEventListener('click', async () => {
             extScriptNode.replaceWith(scriptNode);
         }
 
-        // Final standalone HTML generate karna
         let finalHTML = "<!DOCTYPE html>\n" + htmlClone.outerHTML;
-        
-        // Blob banakar download trigger karna
         const blob = new Blob([finalHTML], { type: 'text/html' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -494,7 +514,6 @@ document.getElementById('saveBtn').addEventListener('click', async () => {
         
     } catch (error) {
         console.error("Save error:", error);
-        // Agar fetch fail ho jaye (jaise agar offline chal raha ho), to fallback normal save
         let currentHTML = document.documentElement.outerHTML;
         const blob = new Blob(["<!DOCTYPE html>\n" + currentHTML], { type: 'text/html' });
         const url = URL.createObjectURL(blob);
