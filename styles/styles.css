@@ -44,7 +44,7 @@ body {
     z-index: 1000; box-shadow: 0 2px 4px var(--tab-shadow);
 }
 
-.tabs-top { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; gap: 8px; }
+.tabs-top { display: flex; justify-content: space-between; align-items: center; padding: 12px 12px; gap: 8px; }
 .tabs-left { display: flex; flex: 1; gap: 5px; overflow-x: auto; scrollbar-width: none; }
 .tabs-left::-webkit-scrollbar { display: none; }
 .tabs-left button {
@@ -63,7 +63,7 @@ body.edit-mode #editBtn { background: transparent; border: 1px solid var(--theme
 
 .controls-row { display: none; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 12px; border-top: 1px solid var(--card-border); background: var(--tab-bg); }
 .control-group { display: flex; align-items: center; gap: 3px; font-size: 10px; font-weight: bold; }
-.control-group input[type="range"] { width: 55px; accent-color: var(--theme-color); }
+.control-group input[type="range"] { width: 65px; accent-color: var(--theme-color); }
 
 .theme-toggle { min-width: 20px; height: 35px; border-radius: 10px; background: #ccc; border: none; position: relative; cursor: pointer; display: flex; justify-content: center; }
 .theme-toggle .switch { width: 14px; height: 14px; border-radius: 50%; background: #fff; position: absolute; top: 2px; transition: 0.3s; }
