@@ -72,7 +72,7 @@ body.dark .theme-toggle .switch { top: 19px; }
 
 .style-select { padding: 4px; border-radius: 5px; border: 1px solid var(--card-border); font-size: 10px; background: var(--tab-active-bg); color: var(--tab-text); }
 
-.container { padding: 55px 12px 100px; height: 100vh; overflow-y: auto; }
+.container { padding: 65px 12px 100px; height: 100vh; overflow-y: auto; }
 body.edit-mode .controls-row { display: flex; }
 body.edit-mode #mainContainer { display: none; }
 body.edit-mode #managerContainer { display: block; padding-top: 140px; }
