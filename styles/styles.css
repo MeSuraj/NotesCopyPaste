@@ -48,7 +48,7 @@ body {
 .tabs-left { display: flex; flex: 1; gap: 5px; overflow-x: auto; scrollbar-width: none; }
 .tabs-left::-webkit-scrollbar { display: none; }
 .tabs-left button {
-    flex: 1; min-width: max-content; padding: 10px 15px; border-radius: 20px; border: none; cursor: pointer;
+    flex: 1; min-width: max-content; padding: 14px 15px; border-radius: 20px; border: none; cursor: pointer;
     background: var(--tab-bg); color: var(--tab-text); font-weight: bold; font-size: 11px;
 }
 .tabs-left button.active { background: var(--tab-active-bg); color: var(--theme-color); box-shadow: 0 2px 5px var(--tab-shadow); }
