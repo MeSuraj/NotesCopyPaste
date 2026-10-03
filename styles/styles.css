@@ -63,7 +63,7 @@ body.edit-mode #editBtn { background: transparent; border: 1px solid var(--theme
 
 .controls-row { display: none; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 12px; border-top: 1px solid var(--card-border); background: var(--tab-bg); }
 .control-group { display: flex; align-items: center; gap: 3px; font-size: 10px; font-weight: bold; }
-.control-group input[type="range"] { width: 65px; accent-color: var(--theme-color); }
+.control-group input[type="range"] { width: 75px; accent-color: var(--theme-color); }
 
 .theme-toggle { min-width: 20px; height: 35px; border-radius: 10px; background: #ccc; border: none; position: relative; cursor: pointer; display: flex; justify-content: center; }
 .theme-toggle .switch { width: 14px; height: 14px; border-radius: 50%; background: #fff; position: absolute; top: 2px; transition: 0.3s; }
@@ -97,7 +97,7 @@ body.edit-mode #managerContainer { display: block; padding-top: 140px; }
 .clear-btn { color: var(--theme-color); border-color: var(--theme-color) !important; }
 
 /* ---------------- MANAGER UI STYLES ---------------- */
-.mgr-header { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; margin-bottom: 20px; }
+.mgr-header { display: flex; justify-content: space-between; align-items: center; margin-top: 26px; margin-bottom: 20px; }
 .mgr-header h2 { font-size: 16px; color: var(--theme-color); margin: 0; }
 .btn-add-tab { background: var(--theme-color); color: white; border: none; padding: 10px 15px; border-radius: 20px; font-weight: bold; font-size: 12px; cursor: pointer; box-shadow: 0 2px 4px var(--tab-shadow); }
 .mgr-tab-box { background: var(--tab-active-bg); border: 1px solid var(--card-border); border-radius: 12px; margin-bottom: 20px; padding: 15px; box-shadow: 0 2px 5px var(--tab-shadow); }
